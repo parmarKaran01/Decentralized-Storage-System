@@ -1,0 +1,81 @@
+.mainContainer{
+    display: grid;
+    place-items: center;
+    /* background-color: aqua; */
+    width: 100%;
+    height: 100%;
+}
+
+.pageContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
+.accountContainer{
+    width: 45vw;
+    height: 30vh;
+    /* background-color: aquamarine; */
+    border: .0625rem solid rgba(255,255,255,.5);
+    box-shadow: 1px 0 6px rgb(0 0 0 / 10%);
+    border-radius: 0.625rem;
+    padding: 1.25rem 1.5rem;
+}
+
+.fileContainer{
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+    width: 45vw;
+    height: 60vh;
+    border: .0625rem solid rgba(255,255,255,.5);
+    box-shadow: 1px 0 6px rgb(0 0 0 / 10%);
+    border-radius: 0.625rem;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.dropZone{
+    width: 40vw;
+    height: 20vh;
+    border: 0.0625rem dashed rgba(255,255,255,.5);
+    border-radius: 0.625rem;
+    padding: 1.25rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.uploadButton{
+    margin-top: 7vh;
+    width: 150px;
+    height: 40px;
+    background-color: rgb(38,166,154);
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.td {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+/* .td {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+} */
+
+.tr:nth-child(even) {
+  background-color: #dddddd;
+}
