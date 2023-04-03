@@ -4,12 +4,15 @@ import Web3 from "web3";
 import { authenticateUser, authState } from "../components/authenticationSlice";
 // import "../styles/Home.module.css";
 import styles from "../styles/Home.module.css";
+import { useRouter } from "next/router";
+import { Button } from "@mui/material";
 
 function signup() {
   const [web3, setWeb3] = useState();
   const [address, setAddress] = useState();
   const [isConnected, setIsConnected] = useState(false);
   const [error, setError] = useState("");
+  const router = useRouter()
   
 
   const dispatch = useDispatch()
@@ -35,6 +38,7 @@ function signup() {
         setAddress(accounts[0]);
         setIsConnected(true);
         dispatch(authenticateUser(accounts[0]))
+        router.push("/storage")
 
         //create local contract copy
       } catch (e) {
@@ -49,9 +53,14 @@ function signup() {
   return (
     <div className={styles.signUpWrapper}>
       {!authDetails.isAuthenticated ? (
-        <button className={styles.btn} onClick={connectWalletHandler}>  
+        <Button  onClick={connectWalletHandler}  style={{
+          background: "rgb(38,166,154)",
+          color: "white",
+    
+        }}
+        size="large">  
           CONNECT WALLET
-        </button>
+        </Button>
       ) : (
         <>
           <h1>Wallet successfully connected! </h1>

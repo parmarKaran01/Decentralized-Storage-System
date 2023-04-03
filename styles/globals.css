@@ -25,3 +25,9 @@ a {
   }
 }
 
+.wrapper {
+  z-index: 999;
+  background: transparent;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}

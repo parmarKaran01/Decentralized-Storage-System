@@ -5,6 +5,7 @@ import { useEffect, useState, useRef } from "react";
 import HALO from "vanta/dist/vanta.halo.min";
 import Link from "next/link";
 import * as THREE from "three";
+import { Button } from "@mui/material";
 
 export default function Home() {
   // const [vantaEffect, setVantaEffect] = useState(0);
@@ -48,7 +49,13 @@ export default function Home() {
             The easiest way to store data on the decentralized web.
           </h3>
           <Link href="/signup">
-            <button className={styles.btn}>Start Storing Now</button>
+            {/* <button className={styles.btn}>Start Storing Now</button> */}
+            <Button style={{
+              background: "rgb(38,166,154)",
+              color: "white",
+              width:"15rem"
+            }}
+            size="large">Start Storing Now</Button>
           </Link>
         </div>
       </div>

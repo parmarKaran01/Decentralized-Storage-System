@@ -9,21 +9,36 @@ import { useSelector } from "react-redux";
 import { authState } from "../components/authenticationSlice";
 import { useRouter } from "next/router";
 import axios from "axios";
+import { Button } from "@mui/material";
+import fileUploaderContract from "../FileUploader.sol/FileUploader.json";
+import moment from "moment/moment";
+const ethers = require("ethers");
 
+const isBrowser = () => typeof window !== "undefined";
 function storage() {
-  const [value, setValue] = useState([]);
+  if (isBrowser()) {
+    const { ethereum } = window;
+  }
+
+  const [account, setAccount] = useState("");
+  const [contractData, setContractData] = useState([]);
+  const [contract, setContract] = useState(null);
+  const [selectedFile, setSelectedFile] = useState([]);
   const userAuthenticated = useSelector(authState);
   const [cid, setCid] = useState("");
   const [error, setError] = useState("");
   const [displayData, setDisplayData] = useState([]);
   const [calculatedSize, setCalculatedSize] = useState(0);
+  const [fuContract, setFuContract] = useState();
+  const reduxAuthState = useSelector(authState);
+  const address = reduxAuthState.metaMaskAddress;
 
-  const JWT = `Bearer `;
+  const JWT = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mb3JtYXRpb24iOnsiaWQiOiJmMzNiNWE0MS1hZjJiLTQ2Y2YtYTEzNy03NjJkOGQ1MGZkMTAiLCJlbWFpbCI6Im1laHRhYWtzaGFyMTIzNEBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwicGluX3BvbGljeSI6eyJyZWdpb25zIjpbeyJpZCI6IkZSQTEiLCJkZXNpcmVkUmVwbGljYXRpb25Db3VudCI6MX0seyJpZCI6Ik5ZQzEiLCJkZXNpcmVkUmVwbGljYXRpb25Db3VudCI6MX1dLCJ2ZXJzaW9uIjoxfSwibWZhX2VuYWJsZWQiOmZhbHNlLCJzdGF0dXMiOiJBQ1RJVkUifSwiYXV0aGVudGljYXRpb25UeXBlIjoic2NvcGVkS2V5Iiwic2NvcGVkS2V5S2V5IjoiMzMwMWQwMDI3NTg0ZGU0ZDJlN2QiLCJzY29wZWRLZXlTZWNyZXQiOiI4ZWM5ZDViNzU3ZmQ1ODM4YmY2NzQ1MzMxZTNjYmNkZTM0MmM5ODYwOGEzNmJjYzI4M2E2NzM2ZWVhMTI4ZTA3IiwiaWF0IjoxNjc2NjMwNjQ2fQ.Yw-KIKg-ZFPB9kcdD90Qtp2FR_GGgzjn4DacrbOqbsc`;
   const router = useRouter();
   const onDrop = useCallback((acceptedFiles, rejectedFiles) => {
     acceptedFiles.forEach((file) => {
       // setValue((prevState) => [...prevState, file]);
-      setValue(file);
+      setSelectedFile(file);
     });
     console.log("accepted Files", acceptedFiles);
     console.log("rejected Files", rejectedFiles);
@@ -34,6 +49,19 @@ function storage() {
     handleCall();
     // CalculateTotalSize()
   }, []);
+
+  useEffect(() => {
+    if (fuContract) {
+      getCIDList();
+    }
+  }, [fuContract]);
+
+  const getCIDList = async () => {
+    console.log(fuContract);
+    const data = await fuContract.methods.getfiles().call();
+    console.log(data);
+    setCidList(data);
+  };
 
   const CalculateTotalSize = () => {
     let sum = 0;
@@ -98,14 +126,49 @@ function storage() {
       console.log(error);
     }
   };
+  // const handleSubmission = async () => {
+  //   const formData = new FormData();
+
+  //   formData.append("file", value);
+
+  //   const metadata = JSON.stringify({
+  //     name: value?.name,
+  //     id: userAuthenticated.metaMaskAddress,
+  //   });
+  //   formData.append("pinataMetadata", metadata);
+
+  //   const options = JSON.stringify({
+  //     cidVersion: 0,
+  //   });
+  //   formData.append("pinataOptions", options);
+
+  //   try {
+  //     const res = await axios.post(
+  //       "https://api.pinata.cloud/pinning/pinFileToIPFS",
+  //       formData,
+  //       {
+  //         maxBodyLength: "Infinity",
+  //         headers: {
+  //           "Content-Type": `multipart/form-data; boundary=${formData._boundary}`,
+  //           Authorization: JWT,
+  //         },
+  //       }
+  //     );
+  //     console.log(res.data);
+  //     setCid(res.data.IpfsHash);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
   const handleSubmission = async () => {
     const formData = new FormData();
 
-    formData.append("file", value);
+    formData.append("file", selectedFile);
 
     const metadata = JSON.stringify({
-      name: value?.name,
-      id: userAuthenticated.metaMaskAddress,
+      name: "File name",
+      id: address,
     });
     formData.append("pinataMetadata", metadata);
 
@@ -126,13 +189,92 @@ function storage() {
           },
         }
       );
-      console.log(res.data);
+      console.log(res.data, res.data.IpfsHash);
+      const txResponse = await contract.addfile(res.data.IpfsHash);
+      const txReceipt = await txResponse.wait();
+      console.log(txReceipt);
       setCid(res.data.IpfsHash);
+      getCIDList();
     } catch (error) {
       console.log(error);
     }
   };
 
+  const handleRetrieve = async () => {
+    // console.log(contract);
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    if (provider.getCode("0x0dA8Bf33288B2b657Db534a17eff48BCEF8B5081")) {
+      const list = await contract.getfiles();
+      setContractData(list);
+      console.log(contractData);
+    }
+  };
+
+  const connectContract = async () => {
+    const contractAddress = "0x0dA8Bf33288B2b657Db534a17eff48BCEF8B5081";
+    const contractABI = [
+      {
+        inputs: [
+          {
+            internalType: "string",
+            name: "_cid",
+            type: "string",
+          },
+        ],
+        name: "addfile",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
+        inputs: [
+          {
+            internalType: "address",
+            name: "",
+            type: "address",
+          },
+          {
+            internalType: "uint256",
+            name: "",
+            type: "uint256",
+          },
+        ],
+        name: "files",
+        outputs: [
+          {
+            internalType: "string",
+            name: "",
+            type: "string",
+          },
+        ],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "getfiles",
+        outputs: [
+          {
+            internalType: "string[]",
+            name: "",
+            type: "string[]",
+          },
+        ],
+        stateMutability: "view",
+        type: "function",
+      },
+    ];
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const tempContract = new ethers.Contract(
+      contractAddress,
+      contractABI,
+      signer
+    );
+    setContract(tempContract);
+
+    console.log(tempContract.address, tempContract);
+  };
   console.log("display data", displayData);
 
   if (!userAuthenticated.isAuthenticated) {
@@ -157,19 +299,51 @@ function storage() {
               <p>Drag 'n' drop some files here, or click to select files</p>
             )}
           </div>
-          <button
+          <Button
             onClick={() => handleSubmission()}
-            className={styles.uploadButton}
+            // className={styles.uploadButton}
+            style={{
+              background: "rgb(38,166,154)",
+              color: "white",
+              marginTop:"1rem"
+            }}
+            size="large"
           >
             Upload
-          </button>
+          </Button>
+          
+
           {/* <button onClick={() => handleCall()} className={styles.uploadButton}>
             View
           </button> */}
           <div className={styles.files}>
-            {value?.name}
+            {selectedFile?.name}
             <span>{cid}</span>
           </div>
+        </div>
+
+        <div className={styles.buttonContainer}>
+        <Button
+            onClick={() => handleRetrieve()}
+            style={{
+              background: "rgb(38,166,154)",
+              color: "white",
+            }}
+            size="large"
+          >
+            Get List
+          </Button>
+
+          <Button
+            onClick={() => connectContract()}
+            style={{
+              background: "rgb(38,166,154)",
+              color: "white",
+            }}
+            size="large"
+          >
+            Connect Contract
+          </Button>
         </div>
 
         {/* <div>
@@ -209,12 +383,8 @@ function storage() {
                           {file?.metadata.name}
                         </a>
                       </td>
-                      <td className="td">
-                        {file?.ipfs_pin_hash}
-                      </td>
-                      <td className="td">
-                        {file?.date_pinned}
-                      </td>
+                      <td className="td">{file?.ipfs_pin_hash}</td>
+                      <td className="td">{moment(file?.date_pinned).format("DD/MM/YYYY")}</td>
                     </tr>
                   );
                 })

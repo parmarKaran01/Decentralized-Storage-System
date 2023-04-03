@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "../styles/Pricing.module.css";
 import Link from "next/link";
+import { Button, Card, CardActions } from "@mui/material";
 
 function pricing() {
   return (
@@ -15,7 +16,166 @@ function pricing() {
         </p>
       </div>
       <div className={styles.cardContainer}>
-        <div className={styles.card}>
+        <Card
+          style={{
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            color: "white",
+            width: "300px",
+          }}
+        >
+          <CardActions
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "start",
+            }}
+          >
+            <div className={styles.cardTitle}>
+              <span>
+                <h1>Free</h1>
+              </span>
+              <span className={styles.prices}>₹0/mo</span>
+            </div>
+
+            <ul className={styles.features}>
+              <li className={styles.feature}>
+                Easily store your data and make it available on IPFS
+              </li>
+              <li className={styles.feature}>
+                All data is replicated onto the Filecoin storage network for
+                verifiability that your data is safe
+              </li>
+              <li className={styles.feature}>
+                Use the platform's other services like w3name and w3link to
+                build the next generation of apps
+              </li>
+            </ul>
+
+            <div className={styles.storageAmount}>
+              <h1 className={styles.amount}>Under Testing</h1>
+            </div>
+            <div className={styles.btnContainer}>
+              <Link href="/storage">
+                <Button
+                  style={{
+                    background: "rgb(38,166,154)",
+                    color: "white",
+                  }}
+                  size="large"
+                >
+                  Get Started
+                </Button>
+              </Link>
+            </div>
+          </CardActions>
+        </Card>
+        <Card
+          style={{
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            color: "white",
+            width: "300px",
+          }}
+        >
+          <CardActions
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "start",
+            }}
+          >
+            <div className={styles.cardTitle}>
+              <span>
+                <h1>Free</h1>
+              </span>
+              <span className={styles.prices}>₹0/mo</span>
+            </div>
+
+            <ul className={styles.features}>
+              <li className={styles.feature}>
+                Easily store your data and make it available on IPFS
+              </li>
+              <li className={styles.feature}>
+                All data is replicated onto the Filecoin storage network for
+                verifiability that your data is safe
+              </li>
+              <li className={styles.feature}>
+                Use the platform's other services like w3name and w3link to
+                build the next generation of apps
+              </li>
+            </ul>
+
+            <div className={styles.storageAmount}>
+              <h1 className={styles.amount}>Under Testing</h1>
+            </div>
+            <div className={styles.btnContainer}>
+              <Link href="/storage">
+                <Button
+                  style={{
+                    background: "rgb(38,166,154)",
+                    color: "white",
+                  }}
+                  size="large"
+                >
+                  Get Started
+                </Button>
+              </Link>
+            </div>
+          </CardActions>
+        </Card>
+        <Card
+          style={{
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            color: "white",
+            width: "300px",
+          }}
+        >
+          <CardActions
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "start",
+            }}
+          >
+            <div className={styles.cardTitle}>
+              <span>
+                <h1>Free</h1>
+              </span>
+              <span className={styles.prices}>₹0/mo</span>
+            </div>
+
+            <ul className={styles.features}>
+              <li className={styles.feature}>
+                Easily store your data and make it available on IPFS
+              </li>
+              <li className={styles.feature}>
+                All data is replicated onto the Filecoin storage network for
+                verifiability that your data is safe
+              </li>
+              <li className={styles.feature}>
+                Use the platform's other services like w3name and w3link to
+                build the next generation of apps
+              </li>
+            </ul>
+
+            <div className={styles.storageAmount}>
+              <h1 className={styles.amount}>Under Testing</h1>
+            </div>
+            <div className={styles.btnContainer}>
+              <Link href="/storage">
+                <Button
+                  style={{
+                    background: "rgb(38,166,154)",
+                    color: "white",
+                  }}
+                  size="large"
+                >
+                  Get Started
+                </Button>
+              </Link>
+            </div>
+          </CardActions>
+        </Card>
+        {/* <div className={styles.card}>
           <div className={styles.cardTitle}>
             <span>
               <h1>Free</h1>
@@ -45,9 +205,9 @@ function pricing() {
               <button className={styles.btn}>Get Started</button>
             </Link>
           </div>
-        </div>
+        </div> */}
         {/* second container */}
-        <div className={styles.card}>
+        {/* <div className={styles.card}>
           <div className={styles.cardTitle}>
             <span>
               <h1>Lite</h1>
@@ -73,10 +233,10 @@ function pricing() {
               <button className={styles.btn}>Get Started</button>
             </Link>
           </div>
-        </div>
+        </div> */}
 
         {/* third container */}
-        <div className={styles.card}>
+        {/* <div className={styles.card}>
           <div className={styles.cardTitle}>
             <span>
               <h1>Expert</h1>
@@ -106,7 +266,7 @@ function pricing() {
               <button className={styles.btn}>Get Started</button>
             </Link>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -4,6 +4,7 @@ import Image from "next/image";
 import Icon from "../Assets/Icons/icons8-web-scraper.svg";
 import { useSelector } from "react-redux";
 import { authState } from "./authenticationSlice";
+import { Button } from "@mui/material";
 
 function Navbar() {
   const { isAuthenticated } = useSelector(authState);
@@ -30,7 +31,16 @@ function Navbar() {
           </ul>
           {isAuthenticated === false ? (
             <Link href="/signup">
-              <button className={styles.btn}>Connect Wallet</button>
+              <Button
+                style={{
+                  background: "rgb(38,166,154)",
+                  color: "white",
+            
+                }}
+                size="large"
+              >
+                Connect Wallet
+              </Button>
             </Link>
           ) : null}
           {/* <Link href="/signup"><button className={styles.btn}>Sign Up</button></Link> */}

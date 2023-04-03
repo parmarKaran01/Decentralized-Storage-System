@@ -1,6 +1,6 @@
 .wrapper {
   width: 100%;
-  height: 100vh;
+  height: 85vh;
   /* background-repeat: no-repeat;
   background-size: 100% 100%; */
   /* background-image: url("../Assets/Images/global-network.jpg"); */
@@ -9,6 +9,7 @@
   /* background-color: rgba(255, 255, 255, 0.1); */
 
   /* z-index: 2; */
+  overflow-y: hidden;
 }
 
 .container {
@@ -57,12 +58,13 @@
 .signUpWrapper {
   /* background-color: aqua; */
   width: 100%;
-  height: 100vh;
+  height: 85vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   z-index: 999;
-  background-color: rgba(0,0,0,0.5);
+  /* background-color: rgba(0,0,0,0.5); */
 }
 
 .btn{

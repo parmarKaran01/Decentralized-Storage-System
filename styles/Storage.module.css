@@ -1,21 +1,36 @@
 .mainContainer{
     display: grid;
     place-items: center;
-    /* background-color: aqua; */
     width: 100%;
-    height: 100%;
+    /* min-height: 100%; */
+    height: 85vh;
+    z-index: 999;
+    /* margin: 2rem 0rem 5rem 0rem; */
+    padding-bottom: 5rem;
+    overflow-y: scroll;
+    /* background-color: rgba(0, 0, 0, 0.7); */
+}
+
+.mainContainer {
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
+.mainContainer::-webkit-scrollbar { 
+  display: none;  /* Safari and Chrome */
 }
 
 .pageContainer{
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
+    height: 100%;
     
 }
 
 .accountContainer{
     width: 45vw;
-    height: 30vh;
+    height: 30%;
     /* background-color: aquamarine; */
     border: .0625rem solid rgba(255,255,255,.5);
     box-shadow: 1px 0 6px rgb(0 0 0 / 10%);
@@ -26,8 +41,8 @@
 .fileContainer{
     margin-top: 5vh;
     margin-bottom: 5vh;
-    width: 45vw;
-    height: 60vh;
+    width: 45%;
+    height: 60%;
     border: .0625rem solid rgba(255,255,255,.5);
     box-shadow: 1px 0 6px rgb(0 0 0 / 10%);
     border-radius: 0.625rem;
@@ -38,8 +53,8 @@
 }
 
 .dropZone{
-    width: 40vw;
-    height: 20vh;
+    width: 90%;
+    height: 70%;
     border: 0.0625rem dashed rgba(255,255,255,.5);
     border-radius: 0.625rem;
     padding: 1.25rem;
@@ -63,6 +78,7 @@
   font-family: arial, sans-serif;
   border-collapse: collapse;
   width: 100%;
+  background-color: red;
 }
 
 .td {
@@ -78,4 +94,14 @@
 
 .tr:nth-child(even) {
   background-color: #dddddd;
+}
+
+
+.buttonContainer{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
 }
