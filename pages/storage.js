@@ -29,6 +29,7 @@ function storage() {
   const [error, setError] = useState("");
   const [displayData, setDisplayData] = useState([]);
   const [calculatedSize, setCalculatedSize] = useState(0);
+  const [cidList, setCidList] = useState(null)
   const [fuContract, setFuContract] = useState();
   const reduxAuthState = useSelector(authState);
   const address = reduxAuthState.metaMaskAddress;
@@ -206,9 +207,11 @@ function storage() {
     if (provider.getCode("0x0dA8Bf33288B2b657Db534a17eff48BCEF8B5081")) {
       const list = await contract.getfiles();
       setContractData(list);
-      console.log(contractData);
+      // console.log(contractData);
     }
   };
+
+  console.log("contract data", contractData)
 
   const connectContract = async () => {
     const contractAddress = "0x0dA8Bf33288B2b657Db534a17eff48BCEF8B5081";
@@ -377,8 +380,8 @@ function storage() {
               <th className="td">Created On</th>
             </tr>
 
-            {displayData.length > 0
-              ? displayData.map((file) => {
+            {contractData 
+              ? contractData.map((file) => {
                   return (
                     <tr className="tr">
                       <td className="td">
