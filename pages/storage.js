@@ -299,19 +299,20 @@ function storage() {
               <p>Drag 'n' drop some files here, or click to select files</p>
             )}
           </div>
-          <Button
-            onClick={() => handleSubmission()}
-            // className={styles.uploadButton}
-            style={{
-              background: "rgb(38,166,154)",
-              color: "white",
-              marginTop:"1rem"
-            }}
-            size="large"
-          >
-            Upload
-          </Button>
-          
+          {contract ? (
+            <Button
+              onClick={() => handleSubmission()}
+              // className={styles.uploadButton}
+              style={{
+                background: "rgb(38,166,154)",
+                color: "white",
+                marginTop: "1rem",
+              }}
+              size="large"
+            >
+              Upload
+            </Button>
+          ) : null}
 
           {/* <button onClick={() => handleCall()} className={styles.uploadButton}>
             View
@@ -323,27 +324,31 @@ function storage() {
         </div>
 
         <div className={styles.buttonContainer}>
-        <Button
-            onClick={() => handleRetrieve()}
-            style={{
-              background: "rgb(38,166,154)",
-              color: "white",
-            }}
-            size="large"
-          >
-            Get List
-          </Button>
+          {contract ? (
+            <Button
+              onClick={() => handleRetrieve()}
+              style={{
+                background: "rgb(38,166,154)",
+                color: "white",
+              }}
+              size="large"
+            >
+              Get List
+            </Button>
+          ) : null}
 
-          <Button
-            onClick={() => connectContract()}
-            style={{
-              background: "rgb(38,166,154)",
-              color: "white",
-            }}
-            size="large"
-          >
-            Connect Contract
-          </Button>
+          {!contract ? (
+            <Button
+              onClick={() => connectContract()}
+              style={{
+                background: "rgb(38,166,154)",
+                color: "white",
+              }}
+              size="large"
+            >
+              Connect Contract
+            </Button>
+          ) : null}
         </div>
 
         {/* <div>
@@ -363,7 +368,8 @@ function storage() {
             : null}
         </div> */}
 
-        <div>
+        {
+          contract ? <div>
           <table className="table">
             <tr className="tr">
               <th className="td">File Name</th>
@@ -384,13 +390,16 @@ function storage() {
                         </a>
                       </td>
                       <td className="td">{file?.ipfs_pin_hash}</td>
-                      <td className="td">{moment(file?.date_pinned).format("DD/MM/YYYY")}</td>
+                      <td className="td">
+                        {moment(file?.date_pinned).format("DD/MM/YYYY")}
+                      </td>
                     </tr>
                   );
                 })
               : null}
           </table>
-        </div>
+        </div> : null
+        }
       </section>
     </div>
   );
