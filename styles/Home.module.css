@@ -67,10 +67,10 @@
   /* background-color: rgba(0,0,0,0.5); */
 }
 
-.btn{
+.btn {
   width: 150px;
   height: 40px;
-  background-color: rgb(38,166,154);
+  background-color: rgb(38, 166, 154);
   border-radius: 5px;
   border: none;
   cursor: pointer;

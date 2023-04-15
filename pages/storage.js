@@ -29,7 +29,7 @@ function storage() {
   const [error, setError] = useState("");
   const [displayData, setDisplayData] = useState([]);
   const [calculatedSize, setCalculatedSize] = useState(0);
-  const [cidList, setCidList] = useState(null)
+  const [cidList, setCidList] = useState(null);
   const [fuContract, setFuContract] = useState();
   const reduxAuthState = useSelector(authState);
   const address = reduxAuthState.metaMaskAddress;
@@ -51,11 +51,11 @@ function storage() {
     // CalculateTotalSize()
   }, []);
 
-  useEffect(() => {
-    if (fuContract) {
-      getCIDList();
-    }
-  }, [fuContract]);
+  // useEffect(() => {
+  //   if (fuContract) {
+  //     getCIDList();
+  //   }
+  // }, [fuContract]);
 
   const getCIDList = async () => {
     console.log(fuContract);
@@ -195,7 +195,7 @@ function storage() {
       const txReceipt = await txResponse.wait();
       console.log(txReceipt);
       setCid(res.data.IpfsHash);
-      getCIDList();
+      // getCIDList();
     } catch (error) {
       console.log(error);
     }
@@ -211,7 +211,7 @@ function storage() {
     }
   };
 
-  console.log("contract data", contractData)
+  console.log("contract data", contractData);
 
   const connectContract = async () => {
     const contractAddress = "0x0dA8Bf33288B2b657Db534a17eff48BCEF8B5081";
@@ -371,38 +371,40 @@ function storage() {
             : null}
         </div> */}
 
-        {
-          contract ? <div>
-          <table className="table">
-            <tr className="tr">
-              <th className="td">File Name</th>
-              <th className="td">Ipfs Hash</th>
-              <th className="td">Created On</th>
-            </tr>
+        {contract ? (
+          <div>
+            <table className="table">
+              <tr className="tr">
+                <th className="td">File Name</th>
+                <th className="td">Ipfs Hash</th>
+                <th className="td">Created On</th>
+              </tr>
 
-            {contractData 
-              ? contractData.map((file) => {
-                  return (
-                    <tr className="tr">
-                      <td className="td">
-                        <a
-                          href={`https://gateway.pinata.cloud/ipfs/${file.ipfs_pin_hash}`}
-                          target="_blank"
-                        >
-                          {file?.metadata.name}
-                        </a>
-                      </td>
-                      <td className="td">{file?.ipfs_pin_hash}</td>
-                      <td className="td">
-                        {moment(file?.date_pinned).format("DD/MM/YYYY")}
-                      </td>
-                    </tr>
-                  );
-                })
-              : null}
-          </table>
-        </div> : null
-        }
+              {contractData
+                ? contractData.map((file) => {
+                    return (
+                      <tr className="tr">
+                        <td className="td">
+                          <a
+                            href={`https://gateway.pinata.cloud/ipfs/${file}`}
+                            target="_blank"
+                          >
+                            {/* {console.log(file)} */}
+                            {file}
+                          </a>
+                        </td>
+                        <td className="td">{file?.ipfs_pin_hash}</td>
+                        <td className="td">
+                          {moment(file?.date_pinned).format("DD/MM/YYYY")}
+                          {/* karan fix the date */}
+                        </td>
+                      </tr>
+                    );
+                  })
+                : null}
+            </table>
+          </div>
+        ) : null}
       </section>
     </div>
   );

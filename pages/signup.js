@@ -12,12 +12,11 @@ function signup() {
   const [address, setAddress] = useState();
   const [isConnected, setIsConnected] = useState(false);
   const [error, setError] = useState("");
-  const router = useRouter()
-  
+  const router = useRouter();
 
-  const dispatch = useDispatch()
-  const authDetails = useSelector(authState)
-  console.log(authDetails)
+  const dispatch = useDispatch();
+  const authDetails = useSelector(authState);
+  console.log(authDetails);
 
   const connectWalletHandler = async () => {
     setError("");
@@ -37,8 +36,8 @@ function signup() {
         //set account 1 to react state
         setAddress(accounts[0]);
         setIsConnected(true);
-        dispatch(authenticateUser(accounts[0]))
-        router.push("/storage")
+        dispatch(authenticateUser(accounts[0]));
+        router.push("/storage");
 
         //create local contract copy
       } catch (e) {
@@ -53,19 +52,25 @@ function signup() {
   return (
     <div className={styles.signUpWrapper}>
       {!authDetails.isAuthenticated ? (
-        <Button  onClick={connectWalletHandler}  style={{
-          background: "rgb(38,166,154)",
-          color: "white",
-    
-        }}
-        size="large">  
+        <Button
+          onClick={connectWalletHandler}
+          style={{
+            background: "rgb(38,166,154)",
+            color: "white",
+          }}
+          size="large"
+        >
           CONNECT WALLET
         </Button>
       ) : (
         <>
           <h1>Wallet successfully connected! </h1>
 
-          <h3> Welcome your public key for encryption is: {authDetails.metaMaskAddress}</h3>
+          <h3>
+            {" "}
+            Welcome your public key for encryption is:{" "}
+            {authDetails.metaMaskAddress}
+          </h3>
         </>
       )}
     </div>
