@@ -17,6 +17,12 @@ function storage() {
     const { ethereum } = window;
   }
 
+
+  //public key
+  const { metaMaskAddress } = useSelector(authState);
+
+  console.log("This is the public key for the meta mask", metaMaskAddress)
+
   const [account, setAccount] = useState("");
   const [contractData, setContractData] = useState([]);
   const [contract, setContract] = useState(null);
