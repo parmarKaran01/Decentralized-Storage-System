@@ -1,10 +1,7 @@
 import React, { useEffect } from "react";
 import styles from "../styles/Storage.module.css";
 import { useCallback, useState } from "react";
-import { useDropzone, FileRejection, FileError } from "react-dropzone";
-import { FirebaseStorage } from "../firebase";
-import { ref, uploadBytesResumable } from "firebase/storage";
-import { v4 } from "uuid";
+import { useDropzone } from "react-dropzone";
 import { useSelector } from "react-redux";
 import { authState } from "../components/authenticationSlice";
 import { useRouter } from "next/router";
@@ -57,12 +54,12 @@ function storage() {
   //   }
   // }, [fuContract]);
 
-  const getCIDList = async () => {
-    console.log(fuContract);
-    const data = await fuContract.methods.getfiles().call();
-    console.log(data);
-    setCidList(data);
-  };
+  // const getCIDList = async () => {
+  //   console.log(fuContract);
+  //   const data = await fuContract.methods.getfiles().call();
+  //   console.log(data);
+  //   setCidList(data);
+  // };
 
   const CalculateTotalSize = () => {
     let sum = 0;
@@ -80,30 +77,6 @@ function storage() {
   }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
-
-  // const data = value.map((file) => {
-  //   return (
-  //     <li key={file.path} className={styles.fileName}>
-  //       {file.name} - {file.size} bytes
-  //     </li>
-  //   );
-  // });
-
-  // const uploadData = () => {
-  //   if (value == null) {
-  //     alert("please select a file");
-  //     return;
-  //   }
-
-  //   const valueRef = ref(FirebaseStorage, `images/${value[0].name}`);
-  //   uploadBytesResumable(valueRef, value[0]).then(() => {
-  //     alert("Files uploaded");
-  //   });
-
-  //   setValue([]);
-  // };
-
-  //ipfs upload code
 
   const config = {
     headers: {
@@ -127,40 +100,6 @@ function storage() {
       console.log(error);
     }
   };
-  // const handleSubmission = async () => {
-  //   const formData = new FormData();
-
-  //   formData.append("file", value);
-
-  //   const metadata = JSON.stringify({
-  //     name: value?.name,
-  //     id: userAuthenticated.metaMaskAddress,
-  //   });
-  //   formData.append("pinataMetadata", metadata);
-
-  //   const options = JSON.stringify({
-  //     cidVersion: 0,
-  //   });
-  //   formData.append("pinataOptions", options);
-
-  //   try {
-  //     const res = await axios.post(
-  //       "https://api.pinata.cloud/pinning/pinFileToIPFS",
-  //       formData,
-  //       {
-  //         maxBodyLength: "Infinity",
-  //         headers: {
-  //           "Content-Type": `multipart/form-data; boundary=${formData._boundary}`,
-  //           Authorization: JWT,
-  //         },
-  //       }
-  //     );
-  //     console.log(res.data);
-  //     setCid(res.data.IpfsHash);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
   const handleSubmission = async () => {
     const formData = new FormData();
@@ -353,23 +292,6 @@ function storage() {
             </Button>
           ) : null}
         </div>
-
-        {/* <div>
-          {displayData.length > 0
-            ? displayData.map((file) => {
-                return (
-                  <div>
-                    <a
-                      href={`https://gateway.pinata.cloud/ipfs/${file.ipfs_pin_hash}`}
-                      target="_blank"
-                    >
-                      {file?.metadata.name}
-                    </a>
-                  </div>
-                );
-              })
-            : null}
-        </div> */}
 
         {contract ? (
           <div>
